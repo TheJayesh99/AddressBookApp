@@ -33,11 +33,13 @@ rel="stylesheet">
                     <label for="name" class="label text">Full Name</label>
                      <br>
                     <input type="text" class="input" id="name" name="name" placeholder="your name.." required>
+                    <error-output class="name-error"></error-output>
                 </div>
                 <div class="row-content">
                     <label for="phoneNumber" class="label text">Phone Number</label>
                     <br>
                     <input type="tel" class="input" id="phoneNumber" name="phoneNumber" placeholder=""  required>
+                    <error-output class="tel-error"></error-output>
                 </div>
                 <div class="row-content">
                     <label for="address" class="label text">Address</label>
@@ -110,6 +112,7 @@ rel="stylesheet">
             </div>
         </form> 
     </div>
+    <script src="../js/ContactForm.js"></script>
 </body>
 
 </html>
