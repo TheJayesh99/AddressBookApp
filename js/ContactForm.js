@@ -60,7 +60,7 @@ function save() {
 
 function createContacts() {
   let contact = new Contact();
-
+  contact.id = new Date().getTime()
   try {
     contact.name = getInputValueById("#name");
   } catch (error) {

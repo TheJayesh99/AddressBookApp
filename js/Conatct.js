@@ -65,7 +65,7 @@ class Contact {
   }
 
   toString(){
-      return `Name ${this.name} phoneNumber ${this.phoneNumber} Address ${this.address} City ${this.city} State ${this.state} Zip  ${this.zip}`
+      return `id ${this.id} Name ${this.name} phoneNumber ${this.phoneNumber} Address ${this.address} City ${this.city} State ${this.state} Zip  ${this.zip}`
   }
 
 }

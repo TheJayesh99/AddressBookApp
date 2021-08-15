@@ -1,7 +1,6 @@
 let contactList
 window.addEventListener("DOMContentLoaded", (event) => {
     contactList = getContactFromStorage()
-    console.log(getContactFromStorage());
     document.querySelector(".contact-count").textContent = contactList.length
     createInnerHtml();
 });
@@ -51,4 +50,16 @@ const getDeptHtml = (deptList) =>{
         depthtml = `${depthtml} <div class="dept-label">${dept}</div>`
     }
     return depthtml
+}
+
+function remove(node) {
+    let removeContact = contactList.find(contact => contact._id == node.id)
+    if (!removeContact) {
+        return
+    }
+    const index = contactList.map(contact => contact._id).indexOf(removeContact._id)
+    contactList.splice(index, 1); 
+    localStorage.setItem("AddressBook",JSON.stringify(contactList))
+    document.querySelector(".contact-count").textContent = contactList.length
+    createInnerHtml();
 }
