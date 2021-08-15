@@ -37,7 +37,7 @@ const createInnerHtml = () => {
         <td>${contact._phoneNumber}</td>
         <td>
             <img src="../assets/icon/delete-black-18dp.svg" alt="delete" id="${contact._id}" onclick="remove(this)">
-            <img src="../assets/icon/create-black-18dp.svg" alt="update" id="${contact.id}" onclick="update(this)">
+            <img src="../assets/icon/create-black-18dp.svg" alt="update" id="${contact._id}" onclick="update(this)">
         </td>
         </tr>`;   
     }
@@ -63,3 +63,12 @@ function remove(node) {
     document.querySelector(".contact-count").textContent = contactList.length
     createInnerHtml();
 }
+
+function update(node) {
+    let contactEdit = contactList.find(empData => empData._id == node.id)
+    if (!contactEdit) {
+        return
+    }
+    localStorage.setItem('contactEdit',JSON.stringify(contactEdit))
+    window.location.replace("../pages/AddressBookForm.html")
+  }

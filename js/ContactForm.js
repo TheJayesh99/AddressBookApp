@@ -1,3 +1,6 @@
+let isUpdate = false
+let contactObj = {}
+
 window.addEventListener("DOMContentLoaded", (event) => {
   //validate first name
   const name = document.querySelector("#name");
@@ -46,6 +49,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
       zipError.textContent = error;
     }
   });
+
+  checkForUpdate();
+  localStorage.removeItem('contactEdit')
 });
 
 function save() {
@@ -122,3 +128,39 @@ function createAndUpdateStorage(contact) {
     alert(contactList.toString())
     localStorage.setItem("AddressBook",JSON.stringify(contactList))
   }
+
+
+  //functions required for updates
+function checkForUpdate(){
+  const contactJson = localStorage.getItem('contactEdit')
+  isUpdate = contactJson ? true : false;
+  if(!isUpdate){
+    return
+  }
+  contactObj = JSON.parse(contactJson)
+  setForm()
+}
+
+function setForm() {
+  setValue("#name",contactObj._name)
+  setValue("#phoneNumber", contactObj._phoneNumber);
+  setValue("#address", contactObj._address);
+  setValue("#city", contactObj._city);
+  setValue("#state", contactObj._state);
+  setValue("#zip", contactObj._zip);
+}
+
+function setSelectedValue(propertyValue,value){
+  let allItems = document.querySelectorAll
+  (propertyValue)
+  allItems.forEach(item =>{
+    if(Array.isArray(value)){
+      if(value.includes(item.value)){
+        item.checked = true
+      }
+    }
+    else if (item.value == value){
+      item.checked = true
+    }
+  })
+}
