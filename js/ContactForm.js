@@ -56,42 +56,38 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 function save() {
   try {
-    let newContact = createContacts();
-    createAndUpdateStorage(newContact)
+    setContactObject()
+    createAndUpdateStorage()
     resetForm()
+    window.location.replace("../pages/AddressBookHome.html")
   } catch (error) {
     alert(error);
   }
 }
 
-function createContacts() {
-  let contact = new Contact();
-  contact.id = new Date().getTime()
+function setContactObject() {
   try {
-    contact.name = getInputValueById("#name");
+    contactObj._name = getInputValueById("#name");
   } catch (error) {
     setTextValue(".name-error", error);
     throw error;
   }
 
   try {
-    contact.phoneNumber = getInputValueById("#phoneNumber");
+    contactObj._phoneNumber = getInputValueById("#phoneNumber");
   } catch (error) {
     setTextValue(".tel-error", error);
     throw error
   }
-  contact.address = getInputValueById("#address");
-  contact.city = getInputValueById("#city");
-  contact.state = getInputValueById("#state");
+  contactObj._address = getInputValueById("#address");
+  contactObj._city = getInputValueById("#city");
+  contactObj._state = getInputValueById("#state");
   try {
-    contact.zip = getInputValueById("#zip");
+    contactObj._zip = getInputValueById("#zip");
   } catch (error) {
     setTextValue(".zip-error", error);
     throw error
   }
-
-  alert(contact.toString());
-  return contact;
 }
 
 const getInputValueById = (id) => {
@@ -118,17 +114,62 @@ function setValue(id, value) {
   element.value = value;
 }
 
-function createAndUpdateStorage(contact) {
-    let contactList = JSON.parse(localStorage.getItem("AddressBook"))
-    if (contactList != undefined) {
-      contactList.push(contact)
-    } else {
-      contactList = [contact]
+function createAndUpdateStorage() {
+  let contactList = JSON.parse(localStorage.getItem("AddressBook"))
+  if (contactList != undefined) {
+    let contactData = contactList.find(empData => empData._id == contactObj._id)
+    if(!contactData){
+      contactList.push(createContactData())
+    }else{
+      const index = contactList.map(empData => empData._id).indexOf(contactData._id)
+      contactList.splice(index,1,createContactData(contactData._id))
     }
-    alert(contactList.toString())
-    localStorage.setItem("AddressBook",JSON.stringify(contactList))
+  } else {
+    contactList = [createContactData()]
+  }
+  alert(contactList.toString())
+  localStorage.setItem("AddressBook",JSON.stringify(contactList))
+}
+
+function createContactData(id) {
+  let contact = new Contact()
+  if (!id) {
+    contact._id = new Date().getTime()
+  }
+  else{
+    contact._id = id
+  }
+  setContactData(contact)
+  return contact
+}
+
+function setContactData(contact) {
+  try {
+    contact.name = getInputValueById("#name");
+  } catch (error) {
+    setTextValue(".name-error", error);
+    throw error;
   }
 
+  try {
+    contact.phoneNumber = getInputValueById("#phoneNumber");
+  } catch (error) {
+    setTextValue(".tel-error", error);
+    throw error
+  }
+  contact.address = getInputValueById("#address");
+  contact.city = getInputValueById("#city");
+  contact.state = getInputValueById("#state");
+  try {
+    contact.zip = getInputValueById("#zip");
+  } catch (error) {
+    setTextValue(".zip-error", error);
+    throw error
+  }
+
+  alert(contact.toString());
+  return contact;
+}
 
   //functions required for updates
 function checkForUpdate(){
