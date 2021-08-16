@@ -50,6 +50,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 
+  let submitButton = document.querySelector("#submitButton")
+  submitButton.addEventListener("click", function(){
+    console.log("clicked me");
+  })
+
   checkForUpdate();
   localStorage.removeItem('contactEdit')
 });
@@ -158,8 +163,19 @@ function setContactData(contact) {
     throw error
   }
   contact.address = getInputValueById("#address");
-  contact.city = getInputValueById("#city");
-  contact.state = getInputValueById("#state");
+  let city = getInputValueById("#city");
+  if (city != "Select City") {
+    contact.city = city;
+  } else {
+    throw "Please select city"
+  }
+  let state = getInputValueById("#state");
+  if (state != "Select State") {
+    contact.state = state;
+  } else {
+    throw "Please select state"
+  }
+
   try {
     contact.zip = getInputValueById("#zip");
   } catch (error) {
