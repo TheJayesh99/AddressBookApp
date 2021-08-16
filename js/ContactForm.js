@@ -50,11 +50,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 
-  let submitButton = document.querySelector("#submitButton")
-  submitButton.addEventListener("click", function(){
-    console.log("clicked me");
-  })
-
   checkForUpdate();
   localStorage.removeItem('contactEdit')
 });
